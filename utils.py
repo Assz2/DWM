@@ -30,3 +30,8 @@ def convert_float_fill_mean(df):
     df_decoded = df_decoded.astype('float64')
     df_floated_filled = df_decoded.fillna(df_decoded.mean())
     return df_floated_filled
+
+def count_feature_clusters(feature_list, feature_clusters):
+    #for cluster in feature_clusters:
+        #print(f"Cluster {cluster}: {len([col for col in df.columns if cluster in col])}")
+    return {cluster: len([col for col in feature_list if cluster in col]) for cluster in feature_clusters}  
