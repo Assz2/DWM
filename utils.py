@@ -3,13 +3,13 @@ from dotenv import load_dotenv
 import pandas as pd
 import numpy as np
 
-# This function remuve the columns from train that are not in test
+# This function removes the columns from train that are not in test
 def intersect_features(train_set, test_set):
     smaller_train = train_set[train_set.columns.intersection(test_set.columns)]
     smaller_train = smaller_train.drop(columns=['id'], axis=1)
     return smaller_train
 
-# This function remuve the columns from train that have more than 40% of NaN
+# This function removes the columns from train that have more than a fixed% of NaN (default is 40%)
 def drop_columns(df, threshold = 0.4):
     minimum_non_NaN = len(df) * threshold   
     dropped_columns = df.columns[df.isnull().sum() > (len(df) - minimum_non_NaN)].tolist()
