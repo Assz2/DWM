@@ -59,6 +59,8 @@ def remove_outliers_iqr(df, droppable_columns):
     
     return cleaned_df
 
+
+#tried to remove outliers with zscore but it is not working
 def remove_outliers_zscore(df, droppable_columns): 
     features = df.drop(columns=droppable_columns, axis=1)
 
