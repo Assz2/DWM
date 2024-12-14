@@ -46,12 +46,28 @@ def drop_rows(df, threshold):
 def remove_outliers_iqr(df, droppable_columns):
     features = df.drop(columns=droppable_columns, axis=1) 
     
+    threshold = 3.0
+    
     for col in features.columns:
         Q1 = df[col].quantile(0.25)
         Q3 = df[col].quantile(0.75)
         IQR = Q3 - Q1
-        lower_bound = Q1 - 2.5 * IQR
-        upper_bound = Q3 + 2.5 * IQR
+        lower_bound = Q1 - threshold * IQR
+        upper_bound = Q3 + threshold * IQR
         features = features[(features[col] >= lower_bound) & (features[col] <= upper_bound)]
     cleaned_df = df.loc[features.index]
+    
     return cleaned_df
+
+def remove_outliers_zscore(df, droppable_columns): 
+    features = df.drop(columns=droppable_columns, axis=1)
+
+    threshold = 3
+
+    z_scores = (features - features.mean()) / features.std()
+    filtered_rows = (np.abs(z_scores) < threshold).any(axis=1)
+    cleaned_df = df.loc[filtered_rows.index]
+
+    return cleaned_df
+
+    
