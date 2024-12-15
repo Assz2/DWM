@@ -72,4 +72,13 @@ def remove_outliers_zscore(df, droppable_columns):
 
     return cleaned_df
 
+
+def fill_missing_values(df):
+    for col in df.columns:
+        if df[col].dtype == 'float64':
+            df[col] = df[col].fillna(df[col].mean())
+        else:
+            df[col] = df[col].fillna(df[col].mean().astype(int))
+    return df
+
     
