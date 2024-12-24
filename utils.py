@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -81,4 +82,11 @@ def fill_missing_values(df):
             df[col] = df[col].fillna(df[col].mean().astype(int))
     return df
 
-    
+def plot_D(D, clusters, names, ax):
+    sns.heatmap(D, annot=True, cmap="Blues", cbar=False, 
+                   linecolor="gray", linewidth=.5, clip_on=False, 
+                   ax=ax)
+    labels = [" + ".join([names[i] for i in c]) for c in clusters]
+    ax.set_yticklabels(labels,rotation=45)
+    ax.set_xticklabels(labels,rotation=45)
+    ax.xaxis.tick_top()
